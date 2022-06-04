@@ -258,7 +258,7 @@ public class FootballTeam {
     este metodo nos sirve para comprobar si un equipo le gana a otro equipo
     con este metodo sabremos cual es el equipo ganador
      */
-    public boolean isWinner(List<ArrayList<String>> a, List<ArrayList<String>> b) {
+    public static boolean isWinner(List<ArrayList<String>> a, List<ArrayList<String>> b) {
         // si a es mayor que b, regresa true, en caso contrario regresa false
         // en caso de empate el que tenga mejor rankin gana, si a tiene mejor ranking regresa true
         if (Float.parseFloat(a.get(0).get(5)) > Float.parseFloat(b.get(0).get(5))) {

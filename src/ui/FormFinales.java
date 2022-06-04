@@ -2,13 +2,82 @@ package ui;
 
 import data.ReadFileCSV;
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import search.FootballTeam;
 
 public class FormFinales extends javax.swing.JPanel {
 
     public FormFinales() {
         initComponents();
+        if (!"".equals(main.infoData)) {
+            // creamos un ReadFileCSV para leer el archivo con la informacion
+            ReadFileCSV file = new ReadFileCSV(main.infoData);
+            // obtenemos la lista con la informacion
+            List<ArrayList<String>> file_data = file.getData();
+            // creamos una instancia de nuestro objeto FootballTeam
+            FootballTeam ft = new FootballTeam(file_data);
+            // obtenemos los puntajes/probabilidades de los equipos
+            List<ArrayList<String>> data = ft.getDataGroupStages();
+            // obtenemos el numero de victorias de cada equipo
+            List<ArrayList<String>> data2 = ft.getNumberOfWinsAndLosses(data);
+            // obtenemos los ganadores de cada grupo
+            List<ArrayList<String>> data3 = ft.getGroupStageWinners(data2);
+            // obtenemos los equipos para cada lado
+            List<ArrayList<String>> sideA = ft.getSideA(data3);
+            List<ArrayList<String>> sideB = ft.getSideB(data3);
+            // posicionamos los equipos en sus respectivos lugares 
+            equipoSideAA1.setText(sideA.get(0).get(2));
+            equipoSideAB2.setText(sideA.get(1).get(2));
+            equipoSideAC1.setText(sideA.get(2).get(2));
+            equipoSideAD2.setText(sideA.get(3).get(2));
+            equipoSideAE1.setText(sideA.get(4).get(2));
+            equipoSideAF2.setText(sideA.get(5).get(2));
+            equipoSideAG1.setText(sideA.get(6).get(2));
+            equipoSideAH2.setText(sideA.get(7).get(2));
+            equipoSideBB.setText(sideB.get(1).get(2));
+            equipoSideBA.setText(sideB.get(0).get(2));
+            equipoSideBD.setText(sideB.get(3).get(2));
+            equipoSideBC.setText(sideB.get(2).get(2));
+            equipoSideBF.setText(sideB.get(5).get(2));
+            equipoSideBE.setText(sideB.get(4).get(2));
+            equipoSideBH.setText(sideB.get(7).get(2));
+            equipoSideBG.setText(sideB.get(6).get(2));
+
+            // obtenemo los ganadores de cada lado que pasan a cuartos de final y los mostramos
+            List<ArrayList<String>> quartersA = ft.getWinners(sideA);
+            List<ArrayList<String>> quartersB = ft.getWinners(sideB);
+            equipoSideAAB.setText(quartersA.get(0).get(2));
+            equipoSideACD.setText(quartersA.get(1).get(2));
+            equipoSideAEF.setText(quartersA.get(2).get(2));
+            equipoSideAGH.setText(quartersA.get(3).get(2));
+            equipoSideBAB.setText(quartersB.get(0).get(2));
+            equipoSideBDC.setText(quartersB.get(1).get(2));
+            equipoSideBEF.setText(quartersB.get(2).get(2));
+            equipoSideBHG.setText(quartersB.get(3).get(2));
+            // obtenemos los ganadores de cada lado que pasan a las semifinales y los mostramos
+            List<ArrayList<String>> semisA = ft.getWinners(quartersA);
+            List<ArrayList<String>> semisB = ft.getWinners(quartersB);
+            equipoSideAABCD.setText(semisA.get(0).get(2));
+            equipoSideAEFGH.setText(semisA.get(1).get(2));
+            equipoSideBABCD.setText(semisB.get(0).get(2));
+            equipoSideBEFGH.setText(semisB.get(1).get(2));
+            // obtenemos los finalistas de cada lado y los mostramos;
+            List<ArrayList<String>> winerA = ft.getWinners(semisA);
+            List<ArrayList<String>> winerB = ft.getWinners(semisB);
+            finalistaA.setText("<html><p style='text-align:center'>"+ winerA.get(0).get(2)+"</p></html>");
+            finalistaB.setText("<html><p style='text-align:center'>"+winerB.get(0).get(2)+"</p></html>");
+            // de los finalistas vemos quien gano y lo mostramos
+            if (FootballTeam.isWinner(winerA, winerB)) {
+                winner.setText("<html><p style='text-align:center'>" + winerA.get(0).get(2)+"</p></html>");
+            } else {
+                winner.setText("<html><p style='text-align:center'>" + winerB.get(0).get(2)+"</p></html>");
+            }
+            // "<html><p style=\"text-align:center\">Seleccionar Datos</p></html>"
+
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -16,35 +85,37 @@ public class FormFinales extends javax.swing.JPanel {
     private void initComponents() {
 
         jPanel2 = new javax.swing.JPanel();
-        equipoSideA1 = new javax.swing.JLabel();
+        equipoSideAA1 = new javax.swing.JLabel();
         jLabel30 = new javax.swing.JLabel();
-        equipoSideA2 = new javax.swing.JLabel();
+        equipoSideAB2 = new javax.swing.JLabel();
         jPanel13 = new javax.swing.JPanel();
         jPanel14 = new javax.swing.JPanel();
         jPanel15 = new javax.swing.JPanel();
+        label = new javax.swing.JLabel();
         jPanel16 = new javax.swing.JPanel();
         jPanel24 = new javax.swing.JPanel();
         jPanel25 = new javax.swing.JPanel();
         jLabel40 = new javax.swing.JLabel();
-        equipoSideB21 = new javax.swing.JLabel();
-        equipoSideB22 = new javax.swing.JLabel();
+        equipoSideBB = new javax.swing.JLabel();
+        equipoSideBA = new javax.swing.JLabel();
         jPanel26 = new javax.swing.JPanel();
         jPanel27 = new javax.swing.JPanel();
-        equipoSideA9 = new javax.swing.JLabel();
+        equipoSideAAB = new javax.swing.JLabel();
         jLabel34 = new javax.swing.JLabel();
-        equipoSideA10 = new javax.swing.JLabel();
+        equipoSideACD = new javax.swing.JLabel();
         jPanel39 = new javax.swing.JPanel();
         jPanel44 = new javax.swing.JPanel();
+        winner = new javax.swing.JLabel();
         jPanel45 = new javax.swing.JPanel();
         jPanel46 = new javax.swing.JPanel();
         jLabel39 = new javax.swing.JLabel();
-        equipoSideB19 = new javax.swing.JLabel();
-        equipoSideB20 = new javax.swing.JLabel();
+        equipoSideBAB = new javax.swing.JLabel();
+        equipoSideBDC = new javax.swing.JLabel();
         jPanel47 = new javax.swing.JPanel();
         jPanel48 = new javax.swing.JPanel();
-        equipoSideA3 = new javax.swing.JLabel();
+        equipoSideAC1 = new javax.swing.JLabel();
         jLabel31 = new javax.swing.JLabel();
-        equipoSideA4 = new javax.swing.JLabel();
+        equipoSideAD2 = new javax.swing.JLabel();
         jPanel53 = new javax.swing.JPanel();
         jPanel65 = new javax.swing.JPanel();
         jPanel66 = new javax.swing.JPanel();
@@ -52,25 +123,28 @@ public class FormFinales extends javax.swing.JPanel {
         jPanel68 = new javax.swing.JPanel();
         jPanel77 = new javax.swing.JPanel();
         jLabel41 = new javax.swing.JLabel();
-        equipoSideB23 = new javax.swing.JLabel();
-        equipoSideB24 = new javax.swing.JLabel();
+        equipoSideBD = new javax.swing.JLabel();
+        equipoSideBC = new javax.swing.JLabel();
         jPanel78 = new javax.swing.JPanel();
         jPanel79 = new javax.swing.JPanel();
         jPanel80 = new javax.swing.JPanel();
-        equipoSideA13 = new javax.swing.JLabel();
+        equipoSideAABCD = new javax.swing.JLabel();
         jLabel36 = new javax.swing.JLabel();
-        equipoSideA14 = new javax.swing.JLabel();
+        equipoSideAEFGH = new javax.swing.JLabel();
         jPanel81 = new javax.swing.JPanel();
+        finalistaA = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        finalistaB = new javax.swing.JLabel();
         jPanel82 = new javax.swing.JPanel();
-        equipoSideB15 = new javax.swing.JLabel();
+        equipoSideBABCD = new javax.swing.JLabel();
         jLabel37 = new javax.swing.JLabel();
-        equipoSideB16 = new javax.swing.JLabel();
+        equipoSideBEFGH = new javax.swing.JLabel();
         jPanel83 = new javax.swing.JPanel();
         jPanel84 = new javax.swing.JPanel();
         jPanel85 = new javax.swing.JPanel();
-        equipoSideA5 = new javax.swing.JLabel();
+        equipoSideAE1 = new javax.swing.JLabel();
         jLabel32 = new javax.swing.JLabel();
-        equipoSideA6 = new javax.swing.JLabel();
+        equipoSideAF2 = new javax.swing.JLabel();
         jPanel86 = new javax.swing.JPanel();
         jPanel87 = new javax.swing.JPanel();
         jPanel88 = new javax.swing.JPanel();
@@ -78,25 +152,25 @@ public class FormFinales extends javax.swing.JPanel {
         jPanel90 = new javax.swing.JPanel();
         jPanel91 = new javax.swing.JPanel();
         jLabel42 = new javax.swing.JLabel();
-        equipoSideB25 = new javax.swing.JLabel();
-        equipoSideB26 = new javax.swing.JLabel();
+        equipoSideBF = new javax.swing.JLabel();
+        equipoSideBE = new javax.swing.JLabel();
         jPanel92 = new javax.swing.JPanel();
         jPanel93 = new javax.swing.JPanel();
-        equipoSideA11 = new javax.swing.JLabel();
+        equipoSideAEF = new javax.swing.JLabel();
         jLabel35 = new javax.swing.JLabel();
-        equipoSideA12 = new javax.swing.JLabel();
+        equipoSideAGH = new javax.swing.JLabel();
         jPanel94 = new javax.swing.JPanel();
         jPanel95 = new javax.swing.JPanel();
         jPanel96 = new javax.swing.JPanel();
         jPanel97 = new javax.swing.JPanel();
         jLabel38 = new javax.swing.JLabel();
-        equipoSideB17 = new javax.swing.JLabel();
-        equipoSideB18 = new javax.swing.JLabel();
+        equipoSideBEF = new javax.swing.JLabel();
+        equipoSideBHG = new javax.swing.JLabel();
         jPanel98 = new javax.swing.JPanel();
         jPanel99 = new javax.swing.JPanel();
-        equipoSideA7 = new javax.swing.JLabel();
+        equipoSideAG1 = new javax.swing.JLabel();
         jLabel33 = new javax.swing.JLabel();
-        equipoSideA8 = new javax.swing.JLabel();
+        equipoSideAH2 = new javax.swing.JLabel();
         jPanel100 = new javax.swing.JPanel();
         jPanel101 = new javax.swing.JPanel();
         jPanel102 = new javax.swing.JPanel();
@@ -104,8 +178,8 @@ public class FormFinales extends javax.swing.JPanel {
         jPanel104 = new javax.swing.JPanel();
         jPanel105 = new javax.swing.JPanel();
         jLabel43 = new javax.swing.JLabel();
-        equipoSideB27 = new javax.swing.JLabel();
-        equipoSideB28 = new javax.swing.JLabel();
+        equipoSideBH = new javax.swing.JLabel();
+        equipoSideBG = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(253, 253, 253));
         setLayout(new java.awt.GridLayout(7, 7));
@@ -113,20 +187,20 @@ public class FormFinales extends javax.swing.JPanel {
         jPanel2.setBackground(new java.awt.Color(253, 253, 253));
         jPanel2.setLayout(new java.awt.GridLayout(3, 0));
 
-        equipoSideA1.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
-        equipoSideA1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        equipoSideA1.setText("Equipo");
-        jPanel2.add(equipoSideA1);
+        equipoSideAA1.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
+        equipoSideAA1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        equipoSideAA1.setText("Equipo");
+        jPanel2.add(equipoSideAA1);
 
         jLabel30.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
         jLabel30.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel30.setText("VS");
         jPanel2.add(jLabel30);
 
-        equipoSideA2.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
-        equipoSideA2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        equipoSideA2.setText("Equipo");
-        jPanel2.add(equipoSideA2);
+        equipoSideAB2.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
+        equipoSideAB2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        equipoSideAB2.setText("Equipo");
+        jPanel2.add(equipoSideAB2);
 
         add(jPanel2);
 
@@ -161,17 +235,12 @@ public class FormFinales extends javax.swing.JPanel {
         add(jPanel14);
 
         jPanel15.setBackground(new java.awt.Color(253, 253, 253));
+        jPanel15.setLayout(new java.awt.BorderLayout());
 
-        javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
-        jPanel15.setLayout(jPanel15Layout);
-        jPanel15Layout.setHorizontalGroup(
-            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 84, Short.MAX_VALUE)
-        );
-        jPanel15Layout.setVerticalGroup(
-            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 53, Short.MAX_VALUE)
-        );
+        label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        label.setText("Ganador");
+        label.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        jPanel15.add(label, java.awt.BorderLayout.CENTER);
 
         add(jPanel15);
 
@@ -211,13 +280,13 @@ public class FormFinales extends javax.swing.JPanel {
         jLabel40.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel40.setText("VS");
 
-        equipoSideB21.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
-        equipoSideB21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        equipoSideB21.setText("Equipo");
+        equipoSideBB.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
+        equipoSideBB.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        equipoSideBB.setText("Equipo");
 
-        equipoSideB22.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
-        equipoSideB22.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        equipoSideB22.setText("Equipo");
+        equipoSideBA.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
+        equipoSideBA.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        equipoSideBA.setText("Equipo");
 
         javax.swing.GroupLayout jPanel25Layout = new javax.swing.GroupLayout(jPanel25);
         jPanel25.setLayout(jPanel25Layout);
@@ -228,9 +297,9 @@ public class FormFinales extends javax.swing.JPanel {
                 .addGroup(jPanel25Layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
                     .addGroup(jPanel25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(equipoSideB21, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(equipoSideBB, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel40, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(equipoSideB22, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(equipoSideBA, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
         jPanel25Layout.setVerticalGroup(
@@ -239,11 +308,11 @@ public class FormFinales extends javax.swing.JPanel {
             .addGroup(jPanel25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel25Layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(equipoSideB21, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(equipoSideBB, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, 0)
                     .addComponent(jLabel40, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, 0)
-                    .addComponent(equipoSideB22, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(equipoSideBA, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
 
@@ -266,17 +335,17 @@ public class FormFinales extends javax.swing.JPanel {
 
         jPanel27.setBackground(new java.awt.Color(253, 253, 253));
 
-        equipoSideA9.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
-        equipoSideA9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        equipoSideA9.setText("Equipo");
+        equipoSideAAB.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
+        equipoSideAAB.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        equipoSideAAB.setText("Equipo");
 
         jLabel34.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
         jLabel34.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel34.setText("VS");
 
-        equipoSideA10.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
-        equipoSideA10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        equipoSideA10.setText("Equipo");
+        equipoSideACD.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
+        equipoSideACD.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        equipoSideACD.setText("Equipo");
 
         javax.swing.GroupLayout jPanel27Layout = new javax.swing.GroupLayout(jPanel27);
         jPanel27.setLayout(jPanel27Layout);
@@ -287,9 +356,9 @@ public class FormFinales extends javax.swing.JPanel {
                 .addGroup(jPanel27Layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
                     .addGroup(jPanel27Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(equipoSideA9, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(equipoSideAAB, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel34, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(equipoSideA10, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(equipoSideACD, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
         jPanel27Layout.setVerticalGroup(
@@ -298,11 +367,11 @@ public class FormFinales extends javax.swing.JPanel {
             .addGroup(jPanel27Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel27Layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(equipoSideA9, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(equipoSideAAB, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, 0)
                     .addComponent(jLabel34, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, 0)
-                    .addComponent(equipoSideA10, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(equipoSideACD, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
 
@@ -324,17 +393,11 @@ public class FormFinales extends javax.swing.JPanel {
         add(jPanel39);
 
         jPanel44.setBackground(new java.awt.Color(253, 253, 253));
+        jPanel44.setLayout(new java.awt.BorderLayout());
 
-        javax.swing.GroupLayout jPanel44Layout = new javax.swing.GroupLayout(jPanel44);
-        jPanel44.setLayout(jPanel44Layout);
-        jPanel44Layout.setHorizontalGroup(
-            jPanel44Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 84, Short.MAX_VALUE)
-        );
-        jPanel44Layout.setVerticalGroup(
-            jPanel44Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 53, Short.MAX_VALUE)
-        );
+        winner.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        winner.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jPanel44.add(winner, java.awt.BorderLayout.CENTER);
 
         add(jPanel44);
 
@@ -359,13 +422,13 @@ public class FormFinales extends javax.swing.JPanel {
         jLabel39.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel39.setText("VS");
 
-        equipoSideB19.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
-        equipoSideB19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        equipoSideB19.setText("Equipo");
+        equipoSideBAB.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
+        equipoSideBAB.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        equipoSideBAB.setText("Equipo");
 
-        equipoSideB20.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
-        equipoSideB20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        equipoSideB20.setText("Equipo");
+        equipoSideBDC.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
+        equipoSideBDC.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        equipoSideBDC.setText("Equipo");
 
         javax.swing.GroupLayout jPanel46Layout = new javax.swing.GroupLayout(jPanel46);
         jPanel46.setLayout(jPanel46Layout);
@@ -376,9 +439,9 @@ public class FormFinales extends javax.swing.JPanel {
                 .addGroup(jPanel46Layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
                     .addGroup(jPanel46Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(equipoSideB19, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(equipoSideBAB, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel39, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(equipoSideB20, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(equipoSideBDC, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
         jPanel46Layout.setVerticalGroup(
@@ -387,11 +450,11 @@ public class FormFinales extends javax.swing.JPanel {
             .addGroup(jPanel46Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel46Layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(equipoSideB19, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(equipoSideBAB, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, 0)
                     .addComponent(jLabel39, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, 0)
-                    .addComponent(equipoSideB20, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(equipoSideBDC, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
 
@@ -414,17 +477,17 @@ public class FormFinales extends javax.swing.JPanel {
 
         jPanel48.setBackground(new java.awt.Color(253, 253, 253));
 
-        equipoSideA3.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
-        equipoSideA3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        equipoSideA3.setText("Equipo");
+        equipoSideAC1.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
+        equipoSideAC1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        equipoSideAC1.setText("Equipo");
 
         jLabel31.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
         jLabel31.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel31.setText("VS");
 
-        equipoSideA4.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
-        equipoSideA4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        equipoSideA4.setText("Equipo");
+        equipoSideAD2.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
+        equipoSideAD2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        equipoSideAD2.setText("Equipo");
 
         javax.swing.GroupLayout jPanel48Layout = new javax.swing.GroupLayout(jPanel48);
         jPanel48.setLayout(jPanel48Layout);
@@ -435,9 +498,9 @@ public class FormFinales extends javax.swing.JPanel {
                 .addGroup(jPanel48Layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
                     .addGroup(jPanel48Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(equipoSideA3, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(equipoSideAC1, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel31, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(equipoSideA4, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(equipoSideAD2, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
         jPanel48Layout.setVerticalGroup(
@@ -446,11 +509,11 @@ public class FormFinales extends javax.swing.JPanel {
             .addGroup(jPanel48Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel48Layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(equipoSideA3, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(equipoSideAC1, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, 0)
                     .addComponent(jLabel31, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, 0)
-                    .addComponent(equipoSideA4, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(equipoSideAD2, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
 
@@ -537,13 +600,13 @@ public class FormFinales extends javax.swing.JPanel {
         jLabel41.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel41.setText("VS");
 
-        equipoSideB23.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
-        equipoSideB23.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        equipoSideB23.setText("Equipo");
+        equipoSideBD.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
+        equipoSideBD.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        equipoSideBD.setText("Equipo");
 
-        equipoSideB24.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
-        equipoSideB24.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        equipoSideB24.setText("Equipo");
+        equipoSideBC.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
+        equipoSideBC.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        equipoSideBC.setText("Equipo");
 
         javax.swing.GroupLayout jPanel77Layout = new javax.swing.GroupLayout(jPanel77);
         jPanel77.setLayout(jPanel77Layout);
@@ -554,9 +617,9 @@ public class FormFinales extends javax.swing.JPanel {
                 .addGroup(jPanel77Layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
                     .addGroup(jPanel77Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(equipoSideB23, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(equipoSideBD, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel41, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(equipoSideB24, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(equipoSideBC, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
         jPanel77Layout.setVerticalGroup(
@@ -565,11 +628,11 @@ public class FormFinales extends javax.swing.JPanel {
             .addGroup(jPanel77Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel77Layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(equipoSideB23, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(equipoSideBD, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, 0)
                     .addComponent(jLabel41, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, 0)
-                    .addComponent(equipoSideB24, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(equipoSideBC, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
 
@@ -607,17 +670,17 @@ public class FormFinales extends javax.swing.JPanel {
 
         jPanel80.setBackground(new java.awt.Color(253, 253, 253));
 
-        equipoSideA13.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
-        equipoSideA13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        equipoSideA13.setText("Equipo");
+        equipoSideAABCD.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
+        equipoSideAABCD.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        equipoSideAABCD.setText("Equipo");
 
         jLabel36.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
         jLabel36.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel36.setText("VS");
 
-        equipoSideA14.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
-        equipoSideA14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        equipoSideA14.setText("Equipo");
+        equipoSideAEFGH.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
+        equipoSideAEFGH.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        equipoSideAEFGH.setText("Equipo");
 
         javax.swing.GroupLayout jPanel80Layout = new javax.swing.GroupLayout(jPanel80);
         jPanel80.setLayout(jPanel80Layout);
@@ -628,9 +691,9 @@ public class FormFinales extends javax.swing.JPanel {
                 .addGroup(jPanel80Layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
                     .addGroup(jPanel80Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(equipoSideA13, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(equipoSideAABCD, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel36, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(equipoSideA14, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(equipoSideAEFGH, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
         jPanel80Layout.setVerticalGroup(
@@ -639,44 +702,49 @@ public class FormFinales extends javax.swing.JPanel {
             .addGroup(jPanel80Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel80Layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(equipoSideA13, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(equipoSideAABCD, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, 0)
                     .addComponent(jLabel36, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, 0)
-                    .addComponent(equipoSideA14, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(equipoSideAEFGH, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
 
         add(jPanel80);
 
         jPanel81.setBackground(new java.awt.Color(253, 253, 253));
+        jPanel81.setLayout(new java.awt.GridLayout(3, 0));
 
-        javax.swing.GroupLayout jPanel81Layout = new javax.swing.GroupLayout(jPanel81);
-        jPanel81.setLayout(jPanel81Layout);
-        jPanel81Layout.setHorizontalGroup(
-            jPanel81Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 84, Short.MAX_VALUE)
-        );
-        jPanel81Layout.setVerticalGroup(
-            jPanel81Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 53, Short.MAX_VALUE)
-        );
+        finalistaA.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        finalistaA.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        finalistaA.setText("Finalista A");
+        jPanel81.add(finalistaA);
+
+        jLabel2.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("VS");
+        jPanel81.add(jLabel2);
+
+        finalistaB.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        finalistaB.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        finalistaB.setText("FinalistaB");
+        jPanel81.add(finalistaB);
 
         add(jPanel81);
 
         jPanel82.setBackground(new java.awt.Color(253, 253, 253));
 
-        equipoSideB15.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
-        equipoSideB15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        equipoSideB15.setText("Equipo");
+        equipoSideBABCD.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
+        equipoSideBABCD.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        equipoSideBABCD.setText("Equipo");
 
         jLabel37.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
         jLabel37.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel37.setText("VS");
 
-        equipoSideB16.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
-        equipoSideB16.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        equipoSideB16.setText("Equipo");
+        equipoSideBEFGH.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
+        equipoSideBEFGH.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        equipoSideBEFGH.setText("Equipo");
 
         javax.swing.GroupLayout jPanel82Layout = new javax.swing.GroupLayout(jPanel82);
         jPanel82.setLayout(jPanel82Layout);
@@ -687,9 +755,9 @@ public class FormFinales extends javax.swing.JPanel {
                 .addGroup(jPanel82Layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
                     .addGroup(jPanel82Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(equipoSideB15, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(equipoSideBABCD, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel37, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(equipoSideB16, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(equipoSideBEFGH, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
         jPanel82Layout.setVerticalGroup(
@@ -698,11 +766,11 @@ public class FormFinales extends javax.swing.JPanel {
             .addGroup(jPanel82Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel82Layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(equipoSideB15, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(equipoSideBABCD, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, 0)
                     .addComponent(jLabel37, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, 0)
-                    .addComponent(equipoSideB16, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(equipoSideBEFGH, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
 
@@ -740,17 +808,17 @@ public class FormFinales extends javax.swing.JPanel {
 
         jPanel85.setBackground(new java.awt.Color(253, 253, 253));
 
-        equipoSideA5.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
-        equipoSideA5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        equipoSideA5.setText("Equipo");
+        equipoSideAE1.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
+        equipoSideAE1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        equipoSideAE1.setText("Equipo");
 
         jLabel32.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
         jLabel32.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel32.setText("VS");
 
-        equipoSideA6.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
-        equipoSideA6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        equipoSideA6.setText("Equipo");
+        equipoSideAF2.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
+        equipoSideAF2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        equipoSideAF2.setText("Equipo");
 
         javax.swing.GroupLayout jPanel85Layout = new javax.swing.GroupLayout(jPanel85);
         jPanel85.setLayout(jPanel85Layout);
@@ -761,9 +829,9 @@ public class FormFinales extends javax.swing.JPanel {
                 .addGroup(jPanel85Layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
                     .addGroup(jPanel85Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(equipoSideA5, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(equipoSideAE1, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(equipoSideA6, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(equipoSideAF2, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
         jPanel85Layout.setVerticalGroup(
@@ -772,11 +840,11 @@ public class FormFinales extends javax.swing.JPanel {
             .addGroup(jPanel85Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel85Layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(equipoSideA5, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(equipoSideAE1, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, 0)
                     .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, 0)
-                    .addComponent(equipoSideA6, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(equipoSideAF2, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
 
@@ -863,13 +931,13 @@ public class FormFinales extends javax.swing.JPanel {
         jLabel42.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel42.setText("VS");
 
-        equipoSideB25.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
-        equipoSideB25.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        equipoSideB25.setText("Equipo");
+        equipoSideBF.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
+        equipoSideBF.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        equipoSideBF.setText("Equipo");
 
-        equipoSideB26.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
-        equipoSideB26.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        equipoSideB26.setText("Equipo");
+        equipoSideBE.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
+        equipoSideBE.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        equipoSideBE.setText("Equipo");
 
         javax.swing.GroupLayout jPanel91Layout = new javax.swing.GroupLayout(jPanel91);
         jPanel91.setLayout(jPanel91Layout);
@@ -880,9 +948,9 @@ public class FormFinales extends javax.swing.JPanel {
                 .addGroup(jPanel91Layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
                     .addGroup(jPanel91Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(equipoSideB25, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(equipoSideBF, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel42, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(equipoSideB26, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(equipoSideBE, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
         jPanel91Layout.setVerticalGroup(
@@ -891,11 +959,11 @@ public class FormFinales extends javax.swing.JPanel {
             .addGroup(jPanel91Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel91Layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(equipoSideB25, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(equipoSideBF, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, 0)
                     .addComponent(jLabel42, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, 0)
-                    .addComponent(equipoSideB26, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(equipoSideBE, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
 
@@ -918,17 +986,17 @@ public class FormFinales extends javax.swing.JPanel {
 
         jPanel93.setBackground(new java.awt.Color(253, 253, 253));
 
-        equipoSideA11.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
-        equipoSideA11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        equipoSideA11.setText("Equipo");
+        equipoSideAEF.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
+        equipoSideAEF.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        equipoSideAEF.setText("Equipo");
 
         jLabel35.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
         jLabel35.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel35.setText("VS");
 
-        equipoSideA12.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
-        equipoSideA12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        equipoSideA12.setText("Equipo");
+        equipoSideAGH.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
+        equipoSideAGH.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        equipoSideAGH.setText("Equipo");
 
         javax.swing.GroupLayout jPanel93Layout = new javax.swing.GroupLayout(jPanel93);
         jPanel93.setLayout(jPanel93Layout);
@@ -939,9 +1007,9 @@ public class FormFinales extends javax.swing.JPanel {
                 .addGroup(jPanel93Layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
                     .addGroup(jPanel93Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(equipoSideA11, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(equipoSideAEF, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(equipoSideA12, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(equipoSideAGH, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
         jPanel93Layout.setVerticalGroup(
@@ -950,11 +1018,11 @@ public class FormFinales extends javax.swing.JPanel {
             .addGroup(jPanel93Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel93Layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(equipoSideA11, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(equipoSideAEF, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, 0)
                     .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, 0)
-                    .addComponent(equipoSideA12, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(equipoSideAGH, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
 
@@ -1011,13 +1079,13 @@ public class FormFinales extends javax.swing.JPanel {
         jLabel38.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel38.setText("VS");
 
-        equipoSideB17.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
-        equipoSideB17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        equipoSideB17.setText("Equipo");
+        equipoSideBEF.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
+        equipoSideBEF.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        equipoSideBEF.setText("Equipo");
 
-        equipoSideB18.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
-        equipoSideB18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        equipoSideB18.setText("Equipo");
+        equipoSideBHG.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
+        equipoSideBHG.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        equipoSideBHG.setText("Equipo");
 
         javax.swing.GroupLayout jPanel97Layout = new javax.swing.GroupLayout(jPanel97);
         jPanel97.setLayout(jPanel97Layout);
@@ -1028,9 +1096,9 @@ public class FormFinales extends javax.swing.JPanel {
                 .addGroup(jPanel97Layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
                     .addGroup(jPanel97Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(equipoSideB17, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(equipoSideBEF, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel38, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(equipoSideB18, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(equipoSideBHG, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
         jPanel97Layout.setVerticalGroup(
@@ -1039,11 +1107,11 @@ public class FormFinales extends javax.swing.JPanel {
             .addGroup(jPanel97Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel97Layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(equipoSideB17, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(equipoSideBEF, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, 0)
                     .addComponent(jLabel38, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, 0)
-                    .addComponent(equipoSideB18, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(equipoSideBHG, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
 
@@ -1066,17 +1134,17 @@ public class FormFinales extends javax.swing.JPanel {
 
         jPanel99.setBackground(new java.awt.Color(253, 253, 253));
 
-        equipoSideA7.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
-        equipoSideA7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        equipoSideA7.setText("Equipo");
+        equipoSideAG1.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
+        equipoSideAG1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        equipoSideAG1.setText("Equipo");
 
         jLabel33.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
         jLabel33.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel33.setText("VS");
 
-        equipoSideA8.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
-        equipoSideA8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        equipoSideA8.setText("Equipo");
+        equipoSideAH2.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
+        equipoSideAH2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        equipoSideAH2.setText("Equipo");
 
         javax.swing.GroupLayout jPanel99Layout = new javax.swing.GroupLayout(jPanel99);
         jPanel99.setLayout(jPanel99Layout);
@@ -1087,9 +1155,9 @@ public class FormFinales extends javax.swing.JPanel {
                 .addGroup(jPanel99Layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
                     .addGroup(jPanel99Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(equipoSideA7, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(equipoSideAG1, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel33, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(equipoSideA8, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(equipoSideAH2, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
         jPanel99Layout.setVerticalGroup(
@@ -1098,11 +1166,11 @@ public class FormFinales extends javax.swing.JPanel {
             .addGroup(jPanel99Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel99Layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(equipoSideA7, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(equipoSideAG1, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, 0)
                     .addComponent(jLabel33, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, 0)
-                    .addComponent(equipoSideA8, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(equipoSideAH2, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
 
@@ -1189,13 +1257,13 @@ public class FormFinales extends javax.swing.JPanel {
         jLabel43.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel43.setText("VS");
 
-        equipoSideB27.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
-        equipoSideB27.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        equipoSideB27.setText("Equipo");
+        equipoSideBH.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
+        equipoSideBH.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        equipoSideBH.setText("Equipo");
 
-        equipoSideB28.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
-        equipoSideB28.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        equipoSideB28.setText("Equipo");
+        equipoSideBG.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
+        equipoSideBG.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        equipoSideBG.setText("Equipo");
 
         javax.swing.GroupLayout jPanel105Layout = new javax.swing.GroupLayout(jPanel105);
         jPanel105.setLayout(jPanel105Layout);
@@ -1206,9 +1274,9 @@ public class FormFinales extends javax.swing.JPanel {
                 .addGroup(jPanel105Layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
                     .addGroup(jPanel105Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(equipoSideB27, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(equipoSideBH, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel43, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(equipoSideB28, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(equipoSideBG, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
         jPanel105Layout.setVerticalGroup(
@@ -1217,11 +1285,11 @@ public class FormFinales extends javax.swing.JPanel {
             .addGroup(jPanel105Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel105Layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(equipoSideB27, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(equipoSideBH, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, 0)
                     .addComponent(jLabel43, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, 0)
-                    .addComponent(equipoSideB28, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(equipoSideBG, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
 
@@ -1230,34 +1298,37 @@ public class FormFinales extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel equipoSideA1;
-    private javax.swing.JLabel equipoSideA10;
-    private javax.swing.JLabel equipoSideA11;
-    private javax.swing.JLabel equipoSideA12;
-    private javax.swing.JLabel equipoSideA13;
-    private javax.swing.JLabel equipoSideA14;
-    private javax.swing.JLabel equipoSideA2;
-    private javax.swing.JLabel equipoSideA3;
-    private javax.swing.JLabel equipoSideA4;
-    private javax.swing.JLabel equipoSideA5;
-    private javax.swing.JLabel equipoSideA6;
-    private javax.swing.JLabel equipoSideA7;
-    private javax.swing.JLabel equipoSideA8;
-    private javax.swing.JLabel equipoSideA9;
-    private javax.swing.JLabel equipoSideB15;
-    private javax.swing.JLabel equipoSideB16;
-    private javax.swing.JLabel equipoSideB17;
-    private javax.swing.JLabel equipoSideB18;
-    private javax.swing.JLabel equipoSideB19;
-    private javax.swing.JLabel equipoSideB20;
-    private javax.swing.JLabel equipoSideB21;
-    private javax.swing.JLabel equipoSideB22;
-    private javax.swing.JLabel equipoSideB23;
-    private javax.swing.JLabel equipoSideB24;
-    private javax.swing.JLabel equipoSideB25;
-    private javax.swing.JLabel equipoSideB26;
-    private javax.swing.JLabel equipoSideB27;
-    private javax.swing.JLabel equipoSideB28;
+    private javax.swing.JLabel equipoSideAA1;
+    private javax.swing.JLabel equipoSideAAB;
+    private javax.swing.JLabel equipoSideAABCD;
+    private javax.swing.JLabel equipoSideAB2;
+    private javax.swing.JLabel equipoSideAC1;
+    private javax.swing.JLabel equipoSideACD;
+    private javax.swing.JLabel equipoSideAD2;
+    private javax.swing.JLabel equipoSideAE1;
+    private javax.swing.JLabel equipoSideAEF;
+    private javax.swing.JLabel equipoSideAEFGH;
+    private javax.swing.JLabel equipoSideAF2;
+    private javax.swing.JLabel equipoSideAG1;
+    private javax.swing.JLabel equipoSideAGH;
+    private javax.swing.JLabel equipoSideAH2;
+    private javax.swing.JLabel equipoSideBA;
+    private javax.swing.JLabel equipoSideBAB;
+    private javax.swing.JLabel equipoSideBABCD;
+    private javax.swing.JLabel equipoSideBB;
+    private javax.swing.JLabel equipoSideBC;
+    private javax.swing.JLabel equipoSideBD;
+    private javax.swing.JLabel equipoSideBDC;
+    private javax.swing.JLabel equipoSideBE;
+    private javax.swing.JLabel equipoSideBEF;
+    private javax.swing.JLabel equipoSideBEFGH;
+    private javax.swing.JLabel equipoSideBF;
+    private javax.swing.JLabel equipoSideBG;
+    private javax.swing.JLabel equipoSideBH;
+    private javax.swing.JLabel equipoSideBHG;
+    private javax.swing.JLabel finalistaA;
+    private javax.swing.JLabel finalistaB;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
@@ -1321,5 +1392,7 @@ public class FormFinales extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel97;
     private javax.swing.JPanel jPanel98;
     private javax.swing.JPanel jPanel99;
+    private javax.swing.JLabel label;
+    private javax.swing.JLabel winner;
     // End of variables declaration//GEN-END:variables
 }

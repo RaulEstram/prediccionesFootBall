@@ -55,8 +55,10 @@ public class main extends javax.swing.JFrame {
         PanelContent = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Tipos de busqueda en grafos");
+        setTitle("Sistema Experto");
         setBackground(new java.awt.Color(255, 255, 255));
+        setMinimumSize(new java.awt.Dimension(700, 500));
+        setPreferredSize(new java.awt.Dimension(900, 550));
 
         Nav.setBackground(new java.awt.Color(201, 214, 223));
         Nav.setPreferredSize(new java.awt.Dimension(160, 379));
@@ -291,7 +293,7 @@ public class main extends javax.swing.JFrame {
         PanelContent.revalidate();
         PanelContent.repaint();
         // cambiamos titulo del form main
-        TituloForm.setText("Busqueda Primero Mejor");
+        TituloForm.setText("Informacion Equipo");
     }//GEN-LAST:event_ButtonPrimeroMejorMouseClicked
 
     // metodos de UI sin importancia realmente 

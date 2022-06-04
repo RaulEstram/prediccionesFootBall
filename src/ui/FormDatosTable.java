@@ -12,11 +12,15 @@ public class FormDatosTable extends javax.swing.JPanel {
 
     public FormDatosTable() {
         initComponents();
-        
+        // comprobamos que exista un archivo seleccionado
         if (!"".equals(main.infoData)) {
+            // creamos una instancia del ReadFileCSV
             ReadFileCSV file = new ReadFileCSV(main.infoData);
+            // obtenemos la lista con la informacion
             List<ArrayList<String>> data = file.getData();
+            // obtenemos el modelo de la tabla
             DefaultTableModel model = (DefaultTableModel) tablaDatos.getModel();
+            // le agregamos la informacion a la tabla
             for (int i = 1; i < data.size(); i++) {
                 String[] row = {data.get(i).get(0), data.get(i).get(1), data.get(i).get(2), data.get(i).get(3), data.get(i).get(4), data.get(i).get(5), data.get(i).get(6)};
                 model.addRow(row);

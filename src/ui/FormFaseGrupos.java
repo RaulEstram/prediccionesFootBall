@@ -10,12 +10,17 @@ public class FormFaseGrupos extends javax.swing.JPanel {
 
     public FormFaseGrupos() {
         initComponents();
+        // comprobamos que hay un archivo seleccionado
         if (!"".equals(main.infoData)) {
+            // creamo una instancia del obtejo ReadFileCSV y obtenemos la lista con la informacion
             ReadFileCSV file = new ReadFileCSV(main.infoData);
+            // creamos una instancia de FootballTeam
             FootballTeam ft = new FootballTeam(file.getData());
+            // obtenemos la informacion de los grupos y sus probablidades/porcentajes
             List<ArrayList<String>> groups = ft.getDataGroupStages();
+            // obtenemos la cantidad de victorias y derrotas de cada equipo
             List<ArrayList<String>> winners = ft.getNumberOfWinsAndLosses(groups);
-
+            // mostramos los equipos y sus respectivas victorias y derrotas
             equipoA1.setText(winners.get(0).get(2) + " " + winners.get(0).get(3) + " - " + winners.get(0).get(4));
             equipoA2.setText(winners.get(1).get(2) + " " + winners.get(1).get(3) + " - " + winners.get(1).get(4));
             equipoA3.setText(winners.get(2).get(2) + " " + winners.get(2).get(3) + " - " + winners.get(2).get(4));
@@ -48,9 +53,7 @@ public class FormFaseGrupos extends javax.swing.JPanel {
             equipoH2.setText(winners.get(29).get(2) + " " + winners.get(29).get(3) + " - " + winners.get(29).get(4));
             equipoH3.setText(winners.get(30).get(2) + " " + winners.get(30).get(3) + " - " + winners.get(30).get(4));
             equipoH4.setText(winners.get(31).get(2) + " " + winners.get(31).get(3) + " - " + winners.get(31).get(4));
-
         }
-
     }
 
     @SuppressWarnings("unchecked")
@@ -109,7 +112,7 @@ public class FormFaseGrupos extends javax.swing.JPanel {
         setBackground(new java.awt.Color(253, 253, 253));
         setLayout(new java.awt.GridLayout(2, 4, 20, 20));
 
-        jPanel1.setBackground(new java.awt.Color(231, 231, 231));
+        jPanel1.setBackground(new java.awt.Color(253, 253, 253));
         jPanel1.setLayout(new java.awt.GridLayout(5, 0));
 
         jLabel1.setBackground(new java.awt.Color(119, 16, 35));
@@ -134,7 +137,7 @@ public class FormFaseGrupos extends javax.swing.JPanel {
 
         add(jPanel1);
 
-        jPanel2.setBackground(new java.awt.Color(231, 231, 231));
+        jPanel2.setBackground(new java.awt.Color(253, 253, 253));
         jPanel2.setLayout(new java.awt.GridLayout(5, 0));
 
         jLabel6.setBackground(new java.awt.Color(119, 16, 35));
@@ -159,7 +162,7 @@ public class FormFaseGrupos extends javax.swing.JPanel {
 
         add(jPanel2);
 
-        jPanel3.setBackground(new java.awt.Color(231, 231, 231));
+        jPanel3.setBackground(new java.awt.Color(253, 253, 253));
         jPanel3.setLayout(new java.awt.GridLayout(5, 0));
 
         jLabel11.setBackground(new java.awt.Color(119, 16, 35));
@@ -184,7 +187,7 @@ public class FormFaseGrupos extends javax.swing.JPanel {
 
         add(jPanel3);
 
-        jPanel4.setBackground(new java.awt.Color(231, 231, 231));
+        jPanel4.setBackground(new java.awt.Color(253, 253, 253));
         jPanel4.setLayout(new java.awt.GridLayout(5, 0));
 
         jLabel16.setBackground(new java.awt.Color(119, 16, 35));
@@ -209,7 +212,7 @@ public class FormFaseGrupos extends javax.swing.JPanel {
 
         add(jPanel4);
 
-        jPanel5.setBackground(new java.awt.Color(231, 231, 231));
+        jPanel5.setBackground(new java.awt.Color(253, 253, 253));
         jPanel5.setLayout(new java.awt.GridLayout(5, 0));
 
         jLabel21.setBackground(new java.awt.Color(119, 16, 35));
@@ -234,7 +237,7 @@ public class FormFaseGrupos extends javax.swing.JPanel {
 
         add(jPanel5);
 
-        jPanel6.setBackground(new java.awt.Color(231, 231, 231));
+        jPanel6.setBackground(new java.awt.Color(253, 253, 253));
         jPanel6.setLayout(new java.awt.GridLayout(5, 0));
 
         jLabel26.setBackground(new java.awt.Color(119, 16, 35));
@@ -259,7 +262,7 @@ public class FormFaseGrupos extends javax.swing.JPanel {
 
         add(jPanel6);
 
-        jPanel7.setBackground(new java.awt.Color(231, 231, 231));
+        jPanel7.setBackground(new java.awt.Color(253, 253, 253));
         jPanel7.setLayout(new java.awt.GridLayout(5, 0));
 
         jLabel31.setBackground(new java.awt.Color(119, 16, 35));
@@ -284,7 +287,7 @@ public class FormFaseGrupos extends javax.swing.JPanel {
 
         add(jPanel7);
 
-        jPanel8.setBackground(new java.awt.Color(231, 231, 231));
+        jPanel8.setBackground(new java.awt.Color(253, 253, 253));
         jPanel8.setLayout(new java.awt.GridLayout(5, 0));
 
         jLabel36.setBackground(new java.awt.Color(119, 16, 35));
